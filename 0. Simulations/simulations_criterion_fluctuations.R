@@ -85,24 +85,34 @@ offset = 0.0
 
 
 
-ggplot(mapping = aes(x = stimulus_strength, y = mean_conf, group = binned_criterion, 
-                     color = binned_criterion), data = df_conf) +
-  geom_line(linewidth = 1.5, aes(group = binned_criterion, color = binned_criterion), position = position_dodge(width = offset)) +
-  geom_point(size = 2.5, position = position_dodge(width = offset)) +
-  facet_wrap(~stimulus_direction, labeller = labeller(stimulus_direction = facet_labs), scales = "free_x") +
-  scale_colour_viridis_c(direction = 1,begin=0, end=.9, name = 'Criterion state', alpha=1) +
-  xlab('Stimulus (a.u.)') +
+ggplot(mapping = aes(x = stimulus_strength, 
+                     y = mean_conf, 
+                     group = binned_criterion, 
+                     color = binned_criterion), 
+       data = df_conf) +
+  geom_line(linewidth = 1.5,
+            position = position_dodge(width = offset)) +
+  geom_point(size = 2.5,
+             position = position_dodge(width = offset)) +
+  facet_wrap(~stimulus_direction,
+             labeller = labeller(stimulus_direction = facet_labs),
+             scales = "free_x") +
+  scale_x_continuous(
+    breaks = c(-3, -2, -1, 1, 2, 3)
+  ) +
+  scale_colour_viridis_c(direction = 1, begin = 0, end = .9,
+                         name = 'Criterion state', alpha = 1) +
+  xlab('Signed stimulus strength (a.u.)') +
   ylab('Confidence (a.u.)') +
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 13) +
   theme(
-    #legend.position="none",
+    panel.spacing.x = unit(.8, "cm"),
+    legend.position = "none",
     axis.text = element_text(size = 15),
     axis.title = element_text(size = 18),
-    legend.title = element_text(size = 18),
-    legend.text = element_text(size = 15),
     strip.text.x = element_text(size = 18),
     plot.title = element_text(size = 24, face = 'bold', hjust = 0)
   )
 
-ggsave("simulated_confidence_pattern.emf", dpi=600)
+ggsave("simulated_confidence_pattern.png", dpi=600)
 
